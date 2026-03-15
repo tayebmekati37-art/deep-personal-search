@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search History - Deep Personal Search</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="max-w-4xl mx-auto p-6">
+        <a href="/" class="text-blue-600 hover:underline mb-4 inline-block">&larr; New Search</a>
+        <h1 class="text-3xl font-bold mb-6">Your Search History</h1>
+        <div class="bg-white shadow rounded-lg overflow-hidden">
+            <ul class="divide-y divide-gray-200">
+                {% for s in searches %}
+                <li class="p-4 hover:bg-gray-50">
+                    <div class="flex justify-between">
+                        <span class="font-medium">{{ s.query }}</span>
+                        <span class="text-sm text-gray-500">{{ s.timestamp }}</span>
+                    </div>
+                    <div class="text-sm text-gray-600 mt-1">Clicks: {{ s.click_count }}</div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

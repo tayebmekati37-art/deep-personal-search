@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - Deep Personal Search</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        function logClick(searchId, chunkId, rank) {
+            fetch('/click', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ search_id: searchId, chunk_id: chunkId, rank: rank })
+            });
+        }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <div class="max-w-4xl mx-auto p-6">
+        <a href="/" class="text-blue-600 hover:underline mb-4 inline-block">&larr; New Search</a>
+        <div id="results" class="space-y-6"></div>
+    </div>
+
+    <script>
+        const data = JSON.parse(sessionStorage.getItem('searchResults'));
+        const container = document.getElementById('results');
+
+        if (!data) {
+            container.innerHTML = '<p class="text-red-500">No results found. Please go back and search again.</p>';
+        } else {
+            const queryDiv = document.createElement('div');
+            queryDiv.className = 'bg-white p-4 rounded-lg shadow';
+            queryDiv.innerHTML = `<h2 class="text-xl font-semibold">Results for "${data.query}"</h2>`;
+            container.appendChild(queryDiv);
+
+            if (data.answer) {
+                const answerDiv = document.createElement('div');
+                answerDiv.className = 'bg-green-50 border-l-4 border-green-500 p-4 rounded-lg shadow';
+                answerDiv.innerHTML = `
+                    <h3 class="font-bold text-lg mb-2">AI Answer</h3>
+                    <p class="text-gray-800">${data.answer.replace(/\n/g, '<br>')}</p>
+                    ${data.sources.length ? '<p class="text-sm text-gray-500 mt-2">Sources: ' + data.sources.map(s => s.title).join(', ') + '</p>' : ''}
+                `;
+                container.appendChild(answerDiv);
+            }
+
+            const resultsDiv = document.createElement('div');
+            resultsDiv.className = 'space-y-4';
+            data.results.forEach((res, idx) => {
+                const item = document.createElement('div');
+                item.className = 'bg-white p-4 rounded-lg shadow hover:shadow-md transition';
+                item.innerHTML = `
+                    <a href="#" onclick="logClick(${data.search_id}, ${res.faiss_id}, ${idx+1}); return true;" class="block">
+                        <h3 class="text-xl font-semibold text-blue-600 hover:underline">${res.title}</h3>
+                        <p class="text-sm text-gray-600">${res.domain} · Quality: ${(res.quality*100).toFixed(0)}%</p>
+                        <p class="text-gray-700 mt-2">${res.snippet}</p>
+                        <div class="flex items-center mt-2 text-xs text-gray-400">
+                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded">Score: ${res.score.toFixed(2)}</span>
+                            <span class="ml-2 cursor-help" title="Personalized based on your history">🎯</span>
+                        </div>
+                    </a>
+                `;
+                resultsDiv.appendChild(item);
+            });
+            container.appendChild(resultsDiv);
+        }
+    </script>
+</body>
+</html>
