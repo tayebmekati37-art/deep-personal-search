@@ -52,3 +52,7 @@ echo "To start the server:"
 echo "  cd backend"
 echo "  uvicorn app:app --reload"
 echo "Then open http://localhost:8000 in your browser."
+
+# Install spaCy model for knowledge graph
+echo "Downloading spaCy model..."
+python -m spacy download en_core_web_sm

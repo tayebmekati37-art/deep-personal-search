@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Knowledge Graph Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-4">
+        <a href="/" class="text-blue-600 hover:underline">&larr; Back to Search</a>
+        <h1 class="text-3xl font-bold my-4">Your Knowledge Graph</h1>
+        <div class="flex flex-wrap gap-4 mb-4">
+            <div>
+                <label>Filter by type:</label>
+                <select id="typeFilter" class="border rounded p-1">
+                    <option value="all">All</option>
+                </select>
+            </div>
+            <div>
+                <label>Search node:</label>
+                <input id="searchNode" class="border rounded p-1" placeholder="Entity name...">
+            </div>
+        </div>
+        <div id="graph" class="bg-white rounded-lg shadow-lg" style="height: 600px;"></div>
+        <div id="details" class="mt-4 p-4 bg-white rounded-lg shadow hidden">
+            <h2 class="text-xl font-bold" id="detailName"></h2>
+            <p id="detailType"></p>
+            <p id="detailDocs"></p>
+        </div>
+    </div>
+    <script src="/static/js/graph.js"></script>
+</body>
+</html>
