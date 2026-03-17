@@ -1,0 +1,9 @@
+
+venv/
+venv311/
+env/
+ENV/
+__pycache__/
+*.pyc
+data/index/*
+data/search_history.db
