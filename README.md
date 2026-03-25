@@ -1,44 +1,63 @@
- Deep Personal Search with Knowledge Graph
 
-A privacy-focused, personalized search engine that learns from your behavior, filters SEO spam, synthesizes answers, and now includes a **knowledge graph** that extracts entities and relationships from your documents for visual exploration and enhanced search relevance.
+# Deep Personal Search – AI Search Engine with Personalization
 
- Features
+[![Python](https://img.shields.io/badge/Python-3.10-blue)](https://python.org)
+[![Flask](https://img.shields.io/badge/Flask-2.3-lightgrey)](https://flask.palletsprojects.com)
+[![FAISS](https://img.shields.io/badge/FAISS-1.7-orange)](https://github.com/facebookresearch/faiss)
+[![spaCy](https://img.shields.io/badge/spaCy-3.5-green)](https://spacy.io)
+[![NetworkX](https://img.shields.io/badge/NetworkX-3.0-blue)](https://networkx.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
-Core Search
-- **Hybrid search** – combines semantic vector search (FAISS) with BM25 for robust retrieval.
-- **Personalization** – tracks clicks and builds an interest profile to boost relevant results.
-- **Quality scoring** – filters SEO spam based on domain authority, content length, and commercial density.
-- **Answer synthesis** – when you ask a question (query ends with `?`), the top results are fed to a local LLM (Ollama + Phi-2) or OpenAI to generate a coherent answer with citations.
-- **Offline-first** – once models are downloaded, the system works without internet (except optional OpenAI fallback).
+> A hybrid search engine that combines vector search, personalization, anti‑spam filtering, and a knowledge graph to deliver relevant, high‑quality results.
 
- Knowledge Graph
-- **Entity extraction** – uses spaCy to extract persons, organizations, locations, and key concepts from your documents during indexing.
-- **Relationship extraction** – captures subject‑verb‑object triples and co‑occurrence relationships.
-- **Persistent storage** – entities and relationships are stored in SQLite tables.
-- **Graph‑enhanced search** – query entities are used to boost results containing related entities.
-- **Interactive visual explorer** – a D3.js force‑directed graph (at `/graph`) lets you:
-  - See nodes colored by entity type (PERSON, ORG, GPE, CONCEPT).
-  - Drag nodes to explore connections.
-  - Click a node to view details (type, source documents).
-  - Filter by entity type and search by name.
-- **Memory dashboard** – visit `/history` to see past searches and click statistics.
+## Screenshots
 
- Technology Stack
+### Dashboard
+![Dashboard](screenshots/Dashboard.PNG)
 
-- **Backend**: Python 3.11, FastAPI, SQLite, FAISS, sentence‑transformers, spaCy, NetworkX
-- **Frontend**: HTML, Tailwind CSS, D3.js
-- **LLM integration**: Ollama (local) or OpenAI API (optional)
+### Knowledge Graph
+![Knowledge Graph](screenshots/KnowledgeGraph.PNG)
 
- Installation
+## Features
 
- Prerequisites
-- Python 3.11 (binary installer available at [python.org](https://www.python.org/downloads/release/python-3119/))
-- Git (optional, for cloning)
-- Windows (the instructions are tailored for Windows; Linux/macOS users can adapt)
+- 🔎 **Hybrid Search** – Combines keyword (BM25) and semantic (FAISS) retrieval.
+- 👤 **Personalization** – Learns user interests from clicks and query history.
+- 🧹 **Anti‑spam** – Filters out low‑quality or spammy results using heuristics and ML.
+- 🧠 **Knowledge Graph** – Builds a graph of entities and relations (NetworkX) for contextual expansion.
+- 📊 **Result Synthesis** – Merges multiple sources (web, local docs) into a single ranked list.
+- 🖥️ **Web UI** – Flask interface to submit queries and view results with graph visualization.
 
- Setup
+---
 
-1. **Clone or download this repository**
-   ```bash
-   git clone https://github.com/tayebmekati37-art/deep-personal-search.git
-   cd deep-personal-search
+## Tech Stack
+
+- **Backend**: Python, Flask
+- **Vector Search**: FAISS (Facebook AI Similarity Search)
+- **NLP**: spaCy for entity extraction
+- **Graph**: NetworkX (visualized with pyvis)
+- **Ranking**: Custom scoring (TF‑IDF + embeddings + personalization)
+- **Database**: SQLite for user history and preferences
+
+---
+
+## Why I Built This
+
+I wanted to create a search engine that understands context, learns from user interactions, and can handle noisy data. This project showcases my ability to integrate AI techniques into a practical web application.
+
+---
+
+## Setup Instructions
+
+### Prerequisites
+- Python 3.8+
+- At least 4GB RAM (for FAISS indexing)
+- (Optional) Local LLM (e.g., Ollama) for content generation
+
+### Clone and Install
+```bash
+git clone https://github.com/tayebmekati37-art/deep-personal-search.git
+cd deep-personal-search
+python -m venv venv
+source venv/bin/activate  # or venv\Scripts\activate on Windows
+pip install -r requirements.txt
+python -m spacy download en_core_web_sm
