@@ -13,7 +13,7 @@
 ## Screenshots
 
 ### Dashboard
-![Dashboard](screenshots/Dashboard.PNG)
+![Dashboard](screenshots/dashboard.PNG)
 
 ### Knowledge Graph
 ![Knowledge Graph](screenshots/KnowledgeGraph.PNG)
